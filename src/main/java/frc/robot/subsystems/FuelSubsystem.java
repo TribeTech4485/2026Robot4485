@@ -38,7 +38,7 @@ public class FuelSubsystem extends SubsystemBase {
     // the motor to inverted so that positive values are used for both intaking and
     // launching, and apply the config to the controller
     SparkMaxConfig launcherConfig = new SparkMaxConfig();
-    launcherConfig.inverted(true);
+    launcherConfig.inverted(false);
     launcherConfig.smartCurrentLimit(LAUNCHER_MOTOR_CURRENT_LIMIT);
     launcherRoller.configure(launcherConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -76,7 +76,7 @@ public class FuelSubsystem extends SubsystemBase {
 
     // A method to set the voltage of the intake roller
   public void setlauncherRoller(double voltage) {
-    launcherRoller.setVoltage(voltage);
+    launcherRoller.setVoltage(7);
   }
 
   // A method to set the voltage of the intake roller

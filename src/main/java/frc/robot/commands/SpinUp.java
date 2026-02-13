@@ -18,7 +18,7 @@ public class SpinUp extends Command {
   public SpinUp(FuelSubsystem fuelSystem) {
     addRequirements(fuelSystem);
     this.fuelSubsystem = fuelSystem;
-  }
+  } 
 
   // Called when the command is initially scheduled. Set the rollers to the
   // appropriate values for intaking
@@ -27,7 +27,7 @@ public class SpinUp extends Command {
     fuelSubsystem
         .setlauncherRoller(
             SmartDashboard.getNumber("Launching value", LAUNCHING_VOLTAGE));
-    fuelSubsystem.setFeederRoller(SmartDashboard.getNumber("Launching spin-up feeder value", SPIN_UP_FEEDER_VOLTAGE));
+    //fuelSubsystem.setFeederRoller(SmartDashboard.getNumber("Launching spin-up feeder value", SPIN_UP_FEEDER_VOLTAGE));
   }
 
   // Called every time the scheduler runs while the command is scheduled. This
