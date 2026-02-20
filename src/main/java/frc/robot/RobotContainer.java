@@ -15,9 +15,10 @@ import frc.robot.commands.Conveyor;
 
 import frc.robot.commands.Auto;
 import frc.robot.commands.Intake;
-import frc.robot.commands.Launch;
-import frc.robot.commands.LaunchSequence;
-import frc.robot.commands.SpinUp;
+import frc.robot.subsystems.Shooter;
+//import frc.robot.commands.Launch;
+//import frc.robot.commands.LaunchSequence;
+//import frc.robot.commands.SpinUp;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FuelSubsystem;
 
@@ -32,7 +33,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final FuelSubsystem fuelSubsystem = new FuelSubsystem();
-
+  private final Shooter shooter = new Shooter();
   // The driver's controller
   private final CommandXboxController driverController = new CommandXboxController(
       DRIVER_CONTROLLER_PORT);
@@ -73,7 +74,11 @@ public class RobotContainer {
     operatorController.leftTrigger().whileTrue(new Intake(fuelSubsystem));
     // While the right bumper on the operator controller is held, spin up for 1
     // second, then launch fuel. When the button is released, stop.
-    operatorController.rightTrigger().whileTrue(new LaunchSequence(fuelSubsystem));
+
+    operatorController.rightTrigger()
+    .onTrue(shooter.shootCommand())
+    .onFalse(shooter.IdleCommand());
+    //.onFalse(new Shooter().Idle());
     // While the A button is held on the operator controller, eject fuel back out
     // the intake
     operatorController.rightBumper().whileTrue(new Conveyor(fuelSubsystem));
@@ -83,7 +88,7 @@ public class RobotContainer {
     // stick away from you (a negative value) drives the robot forwards (a positive
     // value)
     driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, driverController));
-
+      
     fuelSubsystem.setDefaultCommand(fuelSubsystem.run(() -> fuelSubsystem.stop()));
   }
 

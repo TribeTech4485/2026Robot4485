@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -22,30 +23,34 @@ import frc.robot.RobotContainer;
 
 import edu.wpi.first.math.util.Units;
 
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.ShooterConstants.*;
+import frc.robot.Constants.FuelConstants;
+import frc.robot.Constants.FuelConstants.*;
 
 public class Shooter extends SubsystemBase {
-  public static Command shoot;
-  public static Object Idle;
 /** Creates a new Shooter. */
   private final SparkMax shooterMotor;
   private final SparkMaxConfig config;
-  private double targetRPM;
+  private double targetRPM = 0;
 
+  private final static double kP = 0.00016541;
+  private final static double kI = 0.0;
+  private final static double kD = 0.0;
+  private final static double kFF = 0.0001;
+
+  private final static double RPM_TOLERANCE = 100;
 
   public Shooter() {
-  shooterMotor = new SparkMax(ShooterConstants.SHOOTERMOTOR_ID,MotorType.kBrushless);
+  shooterMotor = new SparkMax(FuelConstants.SHOOTER_MOTOR_ID,MotorType.kBrushless);
   config = new SparkMaxConfig();
 
   config.inverted(false);
   config.smartCurrentLimit(40);
 
   config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
-  config.closedLoop.p(0.00016541);
-  config.closedLoop.i(0);
-  config.closedLoop.d(0);
-  config.closedLoop.velocityFF(0.0001);
+  config.closedLoop.p(kP);
+  config.closedLoop.i(kI);
+  config.closedLoop.d(kD);
+  config.closedLoop.velocityFF(kFF);
 
   shooterMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
  }
@@ -61,16 +66,17 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean atTargetRPM() {
-    return Math.abs(getRPM() - targetRPM) < 100;
+    return Math.abs(getRPM() - targetRPM) < RPM_TOLERANCE;
   }
-  public Command shoot() {
-    targetRPM = 3000;
-    return null;
+  public Command shootCommand() {
+    return run (() -> targetRPM = 3800);
   }
-  public Command Idle() {
-    targetRPM = 2000;
-    return null;
+  public Command IdleCommand() {
+  return run (() -> targetRPM = 2000);
   }
+public Command stop() {
+    return run (() -> targetRPM = 0);
+}
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
