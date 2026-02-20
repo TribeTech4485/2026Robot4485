@@ -83,5 +83,3 @@ public class Shooter extends SubsystemBase {
     return run(() -> setTargetRPM(0));
   }
 }
-
-
