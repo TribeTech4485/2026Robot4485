@@ -5,60 +5,59 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
-
-import com.revrobotics.ResetMode;
-import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.SparkBase;
-
-import frc.robot.RobotContainer;
-
-import edu.wpi.first.math.util.Units;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.FeedbackSensor;
 
 import frc.robot.Constants.FuelConstants;
-import frc.robot.Constants.FuelConstants.*;
 
 public class Shooter extends SubsystemBase {
-/** Creates a new Shooter. */
+
   private final SparkMax shooterMotor;
   private final SparkMaxConfig config;
+
   private double targetRPM = 0;
 
-  private final static double kP = 0.00016541;
-  private final static double kI = 0.0;
-  private final static double kD = 0.0;
-  private final static double kFF = 0.0001;
+  private static final double kP = 0.00016541;
+  private static final double kI = 0.0;
+  private static final double kD = 0.0;
+  private static final double kFF = 0.0001;
 
-  private final static double RPM_TOLERANCE = 100;
+  private static final double RPM_TOLERANCE = 100;
 
   public Shooter() {
-  shooterMotor = new SparkMax(FuelConstants.SHOOTER_MOTOR_ID,MotorType.kBrushless);
-  config = new SparkMaxConfig();
 
-  config.inverted(false);
-  config.smartCurrentLimit(40);
+    shooterMotor = new SparkMax(
+        FuelConstants.SHOOTER_MOTOR_ID,
+        MotorType.kBrushless);
 
-  config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
-  config.closedLoop.p(kP);
-  config.closedLoop.i(kI);
-  config.closedLoop.d(kD);
-  config.closedLoop.velocityFF(kFF);
+    config = new SparkMaxConfig();
 
-  shooterMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
- }
+    config.inverted(false);
+    config.smartCurrentLimit(40);
+
+    config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
+    config.closedLoop.p(kP);
+    config.closedLoop.i(kI);
+    config.closedLoop.d(kD);
+    config.closedLoop.velocityFF(kFF);
+
+    shooterMotor.configure(
+        config,
+        SparkBase.ResetMode.kResetSafeParameters,
+        SparkBase.PersistMode.kPersistParameters);
+  }
 
   public void setTargetRPM(double rpm) {
     targetRPM = rpm;
 
-    shooterMotor.getClosedLoopController().setReference(targetRPM, com.revrobotics.spark.SparkBase.ControlType.kVelocity);
+    shooterMotor.getClosedLoopController().setReference(
+        targetRPM,
+        SparkBase.ControlType.kVelocity);
   }
 
   public double getRPM() {
@@ -68,17 +67,19 @@ public class Shooter extends SubsystemBase {
   public boolean atTargetRPM() {
     return Math.abs(getRPM() - targetRPM) < RPM_TOLERANCE;
   }
+
+  // Shoot at full speed
   public Command shootCommand() {
-    return run (() -> targetRPM = 3800);
+    return run(() -> setTargetRPM(3740));
   }
-  public Command IdleCommand() {
-  return run (() -> targetRPM = 2000);
+
+  // Idle speed
+  public Command idleCommand() {
+    return run(() -> setTargetRPM(3000));
   }
-public Command stop() {
-    return run (() -> targetRPM = 0);
-}
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+
+  // Stop shooter
+  public Command stopCommand() {
+    return run(() -> setTargetRPM(0));
   }
 }
