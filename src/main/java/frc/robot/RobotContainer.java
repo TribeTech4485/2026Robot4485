@@ -4,11 +4,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
+
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
+<<<<<<< HEAD
 import static frc.robot.Constants.OperatorConstants.*;
 
 import frc.robot.commands.Drive;
@@ -21,27 +24,29 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FuelSubsystem;
 import frc.robot.subsystems.Shooter;
 
+=======
+>>>>>>> 385b4f835e1e9963a447b4535a4e6ef354ad7715
 public class RobotContainer {
 
-  // Subsystems
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final FuelSubsystem fuelSubsystem = new FuelSubsystem();
-  private final Shooter shooter = new Shooter();
+    private final DriveSubsystem drive =
+        new DriveSubsystem();
 
-  
-  private final CommandXboxController driverController =
-      new CommandXboxController(DRIVER_CONTROLLER_PORT);
+    private final ConveyorSubsystem conveyor =
+        new ConveyorSubsystem();
 
-  private final CommandXboxController operatorController =
-      new CommandXboxController(OPERATOR_CONTROLLER_PORT);
+    private final ShooterSubsystem shooter =
+        new ShooterSubsystem();
 
-  
-  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+    private final VisionSubsystem vision =
+        new VisionSubsystem();
 
-  public RobotContainer() {
+    private final CommandXboxController controller =
+        new CommandXboxController(0);
 
-    configureBindings();
+    private final SendableChooser<Command> autoChooser =
+        new SendableChooser<>();
 
+<<<<<<< HEAD
     autoChooser.setDefaultOption(
         "Default Auto",
         new Auto(driveSubsystem, fuelSubsystem, shooter));
@@ -51,13 +56,25 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
   private void configureBindings() {
+=======
+    public RobotContainer() {
 
-    
+        drive.setDefaultCommand(
+            new DriveCommand(drive, controller)
+        );
 
-    
-    operatorController.leftTrigger()
-        .whileTrue(new Intake(fuelSubsystem));
+        configureBindings();
+        configureAuto();
+    }
+>>>>>>> 385b4f835e1e9963a447b4535a4e6ef354ad7715
 
+    private void configureBindings() {
+
+        controller.a().whileTrue(
+            new ConveyorCommand(conveyor)
+        );
+
+<<<<<<< HEAD
     
     operatorController.rightTrigger()
         .onTrue(shooter.shootCommand())
@@ -65,21 +82,30 @@ public class RobotContainer {
         
     operatorController.leftBumper()
     .onTrue(shooter.stopCommand());
+=======
+        controller.b().whileTrue(
+            new RunCommand(shooter::shoot, shooter)
+        );
+>>>>>>> 385b4f835e1e9963a447b4535a4e6ef354ad7715
 
-  
-    operatorController.rightBumper()
-        .whileTrue(new Conveyor(fuelSubsystem));
+        controller.x().whileTrue(
+            new AprilTagAlignCommand(drive, vision)
+        );
+    }
 
-    
+    private void configureAuto() {
 
-    driveSubsystem.setDefaultCommand(
-        new Drive(driveSubsystem, driverController));
+        autoChooser.setDefaultOption("Do Nothing", null);
 
-    fuelSubsystem.setDefaultCommand(
-        fuelSubsystem.run(() -> fuelSubsystem.stop()));
-  }
+        autoChooser.addOption(
+            "2 Piece Auto",
+            new CompetitionAuto(drive, conveyor, shooter)
+        );
 
-  public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
-  }
+        SmartDashboard.putData("Auto Mode", autoChooser);
+    }
+
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 }
