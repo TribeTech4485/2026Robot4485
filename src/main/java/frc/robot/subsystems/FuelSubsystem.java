@@ -37,9 +37,9 @@ public class FuelSubsystem extends SubsystemBase {
     // create the configuration for the launcher roller, set a current limit, set
     // the motor to inverted so that positive values are used for both intaking and
     // launching, and apply the config to the controller
-    SparkMaxConfig launcherConfig = new SparkMaxConfig();
-    launcherConfig.inverted(false);
-    launcherConfig.smartCurrentLimit(LAUNCHER_MOTOR_CURRENT_LIMIT);
+    //SparkMaxConfig launcherConfig = new SparkMaxConfig();
+    //launcherConfig.inverted(false);
+    //launcherConfig.smartCurrentLimit(LAUNCHER_MOTOR_CURRENT_LIMIT);
     //launcherRoller.configure(launcherConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // create the configuration for the conveyor roller, set a current limit and apply
@@ -51,7 +51,7 @@ public class FuelSubsystem extends SubsystemBase {
     // create the configuration for the intake roller, set a current limit and apply the config to the controller
     SparkMaxConfig intakeConfig = new SparkMaxConfig();
     intakeConfig.smartCurrentLimit(LAUNCHER_MOTOR_CURRENT_LIMIT);
-    intakeRoller.configure(launcherConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    intakeRoller.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // put default values for various fuel operations onto the dashboard
     // all commands using this subsystem pull values from the dashbaord to allow
@@ -61,7 +61,7 @@ public class FuelSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Intake roller value", INTAKING_VOLTAGE);
     //SmartDashboard.putNumber("Launching value", LAUNCHING_VOLTAGE);
     SmartDashboard.putNumber("Conveyor roller value", CONVEYOR_VOLTAGE);
-    SmartDashboard.putNumber("Spin-up feeder roller value", SPIN_UP_FEEDER_VOLTAGE);
+    //SmartDashboard.putNumber("Spin-up feeder roller value", SPIN_UP_FEEDER_VOLTAGE);
   }
 
   // A method to set the voltage of the intake roller
