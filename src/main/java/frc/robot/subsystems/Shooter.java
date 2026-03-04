@@ -20,7 +20,7 @@ public class Shooter extends SubsystemBase {
   private final SparkMax shooterMotor;
   private final SparkMaxConfig config;
 
-  public double targetRPM = 0;
+  private double targetRPM = 0;
 
   private static final double kP = 0.00016541;
   private static final double kI = 0.0;
@@ -75,14 +75,11 @@ public class Shooter extends SubsystemBase {
 
   // Idle speed
   public Command idleCommand() {
-    return run(() -> setTargetRPM(2500));
+    return run(() -> setTargetRPM(3000));
   }
 
   // Stop shooter
   public Command stopCommand() {
     return run(() -> setTargetRPM(0));
   }
-
-public class shootCommand {
-}
 }

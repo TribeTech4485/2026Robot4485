@@ -13,7 +13,7 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoOne extends SequentialCommandGroup {
   /** Creates a new ExampleAuto. */
-  public AutoOne(DriveSubsystem driveSubsystem, FuelSubsystem ballSubsystem,Shooter shooter) {
+  public AutoOne(DriveSubsystem driveSubsystem,FuelSubsystem fuel,Shooter shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -21,7 +21,7 @@ public class AutoOne extends SequentialCommandGroup {
     // intentionally creates a command which does not end which allows us to control
     // the timing using the withTimeout decorator
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(1),
-    new AutoDrive(driveSubsystem, 0,0).withTimeout(.25),
+    new AutoDrive(driveSubsystem, 0,.5).withTimeout(.25),
     new AutoDrive(driveSubsystem, 0,.5).withTimeout(.23),
     new AutoDrive(driveSubsystem, 0,0).withTimeout(.25),
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.25),
@@ -29,6 +29,7 @@ public class AutoOne extends SequentialCommandGroup {
     new AutoDrive(driveSubsystem, 0,-.5).withTimeout(.4),
     new AutoDrive(driveSubsystem, 0,0).withTimeout(.25),
     shooter.shootCommand().withTimeout(3),
+    new Conveyor(fuel).withTimeout(4),
     new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.75)
 
     // Spin up the launcher for 1 second and then launch balls for 9 seconds, for a

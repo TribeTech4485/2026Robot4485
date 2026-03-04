@@ -9,6 +9,13 @@
       "name": "Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",
+      "projectName": "2026Robot4485-9"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
       "projectName": "2026Robot4485-7"
     },
     {
