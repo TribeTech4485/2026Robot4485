@@ -13,7 +13,8 @@ import static frc.robot.Constants.OperatorConstants.*;
 
 import frc.robot.commands.Drive;
 import frc.robot.commands.Conveyor;
-import frc.robot.commands.Auto;
+import frc.robot.commands.LeftAuto;
+import frc.robot.commands.CenterAuto;
 import frc.robot.commands.RightAuto;
 import frc.robot.commands.Intake;
 
@@ -43,9 +44,12 @@ public class RobotContainer {
     configureBindings();
 
     autoChooser.setDefaultOption(
-        "Default Auto",
-        new Auto(driveSubsystem,fuelSubsystem, shooter));
-     autoChooser.addOption(
+        "LeftAuto",
+        new LeftAuto(driveSubsystem,fuelSubsystem, shooter));
+        autoChooser.addOption(
+        "CenterAuto",
+        new CenterAuto(driveSubsystem,fuelSubsystem ,shooter));
+        autoChooser.addOption(
         "RightAuto",
         new RightAuto(driveSubsystem,fuelSubsystem ,shooter));
 

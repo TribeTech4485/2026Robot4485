@@ -26,7 +26,7 @@ public class RightAuto extends SequentialCommandGroup {
     new AutoDrive(driveSubsystem, .25, 0).withTimeout(.10),
     shooter.shootCommand().withTimeout(1),
     new Conveyor(fuelSubsystem).withTimeout(5),
-    shooter.stopCommand().withTimeout(.1),
+    shooter.stopCommand().withTimeout(.01),
     new AutoDrive(driveSubsystem, -.25, 0).withTimeout(.10),
     new AutoDrive(driveSubsystem, 0, .5).withTimeout(.40),
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.25),
