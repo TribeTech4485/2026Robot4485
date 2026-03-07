@@ -14,6 +14,7 @@ import static frc.robot.Constants.OperatorConstants.*;
 import frc.robot.commands.Drive;
 import frc.robot.commands.Conveyor;
 import frc.robot.commands.Auto;
+import frc.robot.commands.RightAuto;
 import frc.robot.commands.Intake;
 
 import frc.robot.subsystems.DriveSubsystem;
@@ -43,10 +44,10 @@ public class RobotContainer {
 
     autoChooser.setDefaultOption(
         "Default Auto",
-        new Auto(driveSubsystem, shooter));
+        new Auto(driveSubsystem,fuelSubsystem, shooter));
      autoChooser.addOption(
-        "autoOne",
-        new Auto(driveSubsystem, shooter));
+        "RightAuto",
+        new RightAuto(driveSubsystem,fuelSubsystem ,shooter));
 
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
