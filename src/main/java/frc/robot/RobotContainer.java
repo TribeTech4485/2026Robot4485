@@ -13,9 +13,18 @@ import static frc.robot.Constants.OperatorConstants.*;
 
 import frc.robot.commands.Drive;
 import frc.robot.commands.Conveyor;
-import frc.robot.commands.LeftAuto;
-import frc.robot.commands.CenterAuto;
-import frc.robot.commands.RightAuto;
+
+import frc.robot.commands.DoNothing;
+
+import frc.robot.commands.LeftClimbAuto;
+import frc.robot.commands.LATCSP;
+
+import frc.robot.commands.CenterClimbAuto;
+import frc.robot.commands.CABTSP;
+
+import frc.robot.commands.RightClimbAuto;
+import frc.robot.commands.RATCSP;
+
 import frc.robot.commands.Intake;
 
 import frc.robot.subsystems.DriveSubsystem;
@@ -44,14 +53,26 @@ public class RobotContainer {
     configureBindings();
 
     autoChooser.setDefaultOption(
-        "LeftAuto",
-        new LeftAuto(driveSubsystem,fuelSubsystem, shooter));
+         "DoNothing",
+        new DoNothing(driveSubsystem));
         autoChooser.addOption(
-        "CenterAuto",
-        new CenterAuto(driveSubsystem,fuelSubsystem ,shooter));
+        "LeftClimbAuto",
+        new LeftClimbAuto(driveSubsystem,fuelSubsystem,shooter));
         autoChooser.addOption(
-        "RightAuto",
-        new RightAuto(driveSubsystem,fuelSubsystem ,shooter));
+        "CenterClimbAuto",
+        new CenterClimbAuto(driveSubsystem,fuelSubsystem,shooter));
+        autoChooser.addOption(
+        "RightClimbAuto",
+        new RightClimbAuto(driveSubsystem,fuelSubsystem,shooter));
+        autoChooser.addOption(
+        "CenterAutoBackToStartPosition",
+        new CABTSP(driveSubsystem,fuelSubsystem,shooter));
+        autoChooser.addOption(
+        "RightAutoToCenterStartPosition",
+        new RATCSP(driveSubsystem,fuelSubsystem,shooter));
+        autoChooser.addOption(
+        "leftAutoToCenterStartPosition",
+        new LATCSP(driveSubsystem,fuelSubsystem,shooter));
 
     SmartDashboard.putData("Auto Mode", autoChooser);
   }

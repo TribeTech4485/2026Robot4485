@@ -11,9 +11,9 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class LeftAuto extends SequentialCommandGroup {
+public class RightClimbAuto extends SequentialCommandGroup {
   /** Creates a new ExampleAuto. */
-  public LeftAuto(DriveSubsystem driveSubsystem,FuelSubsystem fuelSubsystem,Shooter shooter) {
+  public RightClimbAuto(DriveSubsystem driveSubsystem,FuelSubsystem fuelSubsystem,Shooter shooter) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -22,31 +22,18 @@ public class LeftAuto extends SequentialCommandGroup {
     // the timing using the withTimeout decorator
     shooter.idleCommand().withTimeout(.5),
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(1),
-    new AutoDrive(driveSubsystem, 0,.6).withTimeout(.16),
+    new AutoDrive(driveSubsystem, 0,-.6).withTimeout(.16),
     new AutoDrive(driveSubsystem, .25, 0).withTimeout(.10),
     shooter.shootCommand().withTimeout(1),
     new Conveyor(fuelSubsystem).withTimeout(5),
     shooter.stopCommand().withTimeout(.01),
     new AutoDrive(driveSubsystem, -.25, 0).withTimeout(.10),
-    new AutoDrive(driveSubsystem, 0, -.5).withTimeout(.40),
+    new AutoDrive(driveSubsystem, 0, .5).withTimeout(.40),
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.25),
-    new AutoDrive(driveSubsystem, 0, 0.5).withTimeout(.30),
+    new AutoDrive(driveSubsystem, 0, -0.5).withTimeout(.30),
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.60),
-    new AutoDrive(driveSubsystem, 0,.5).withTimeout(.25),
+    new AutoDrive(driveSubsystem, 0,-.5).withTimeout(.25),
     new AutoDrive(driveSubsystem,-.5,0).withTimeout(.3)
-    //new AutoDrive(driveSubsystem, 0,.5).withTimeout(.23),
-    //new AutoDrive(driveSubsystem, 0,0).withTimeout(.25),
-    //new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.25),
-    //new AutoDrive(driveSubsystem, 0,0).withTimeout(.25),
-    //new AutoDrive(driveSubsystem, 0,-.5).withTimeout(.4),
-    //new AutoDrive(driveSubsystem, 0,0).withTimeout(.25),
-    //shooter.shootCommand().withTimeout(3),
-    //new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.75)
-
-    // Spin up the launcher for 1 second and then launch balls for 9 seconds, for a
-    // total of 10 seconds
-    //new Launch(ballSubsystem).withTimeout(10)
     );
   }
-
 }
