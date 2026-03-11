@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.IntakeRotater;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -21,7 +23,6 @@ public final class Constants {
     public static final int LEFT_FOLLOWER_ID = 2;
     public static final int RIGHT_LEADER_ID = 3;
     public static final int RIGHT_FOLLOWER_ID = 4;
- 
 
 
     // Current limit for drivetrain motors. Typical is 40-60 for NEO motors and
@@ -65,5 +66,12 @@ public final class Constants {
     // help avoid turning too fast and beign difficult to control
     public static final double DRIVE_SCALING = .7;
     public static final double ROTATION_SCALING = .8;
+  }
+  public static final class ClimberConstants {
+    public static final int LEFT_CLIMBER_ID = 9;
+    public static final int RIGHT_CLIMBER_ID = 10;
+  }
+  public static final class IntakeConstants {
+    public static final int INTAKE_ROTATER_ID = 11;
   }
 }

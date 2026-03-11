@@ -30,6 +30,8 @@ import frc.robot.commands.Intake;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FuelSubsystem;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.IntakeRotater;
+import frc.robot.subsystems.Climber;
 
 public class RobotContainer {
 
@@ -37,7 +39,8 @@ public class RobotContainer {
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
   private final FuelSubsystem fuelSubsystem = new FuelSubsystem();
   private final Shooter shooter = new Shooter();
-
+  private final IntakeRotater intakeRotater = new IntakeRotater();
+  private final Climber climb = new Climber();
   
   private final CommandXboxController driverController =
       new CommandXboxController(DRIVER_CONTROLLER_PORT);
@@ -96,7 +99,19 @@ public class RobotContainer {
     operatorController.rightBumper()
         .whileTrue(new Conveyor(fuelSubsystem));
 
-    
+    operatorController.a()
+        .whileTrue(climb.climbUp())
+        .onFalse(climb.stopClimb());
+    operatorController.b()
+        .whileTrue(climb.climbDown())
+        .onFalse(climb.stopClimb());
+
+    operatorController.x()
+        .whileTrue(intakeRotater.rotateIntakeUp())
+        .onFalse(intakeRotater.stopIntakeRotation());
+    operatorController.y()
+        .whileTrue(intakeRotater.rotateIntakeDown())
+        .onFalse(intakeRotater.stopIntakeRotation());
 
     driveSubsystem.setDefaultCommand(
         new Drive(driveSubsystem, driverController));
