@@ -22,7 +22,8 @@ public class Shooter extends SubsystemBase {
 
   private double targetRPM = 0;
 
-  private static final double kP = 0.00016541;
+  private static final double kP = 0.0003;
+  //16541;
   private static final double kI = 0.0;
   private static final double kD = 0.0;
   private static final double kFF = 0.0001;
@@ -70,12 +71,12 @@ public class Shooter extends SubsystemBase {
 
   // Shoot at full speed
   public Command shootCommand() {
-    return run(() -> setTargetRPM(3740));
+    return run(() -> setTargetRPM(-3740));
   }
 
   // Idle speed
   public Command idleCommand() {
-    return run(() -> setTargetRPM(3000));
+    return run(() -> setTargetRPM(-3000));
   }
 
   // Stop shooter

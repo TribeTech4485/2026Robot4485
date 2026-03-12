@@ -71,7 +71,7 @@ public class FuelSubsystem extends SubsystemBase {
 
   // A method to set the voltage of the intake roller
   public void setFeederRoller(double voltage) {
-    feederRoller.setVoltage(voltage);
+    feederRoller.setVoltage(-voltage);
   }
 
     // A method to set the voltage of the intake roller
@@ -81,7 +81,7 @@ public class FuelSubsystem extends SubsystemBase {
 
   // A method to set the voltage of the intake roller
   public void setconveyorRoller(double voltage) {
-    conveyorRoller.setVoltage(voltage);
+    conveyorRoller.setVoltage(-voltage);
   }
 
   // A method to stop the rollers

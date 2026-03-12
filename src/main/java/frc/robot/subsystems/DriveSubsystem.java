@@ -116,10 +116,10 @@ public class DriveSubsystem extends SubsystemBase {
     // follower. Resetting in case a new controller is swapped
     // in and persisting in case of a controller reset due to breaker trip
 
-    //config.follow(leftLeader);
-    //leftFollower.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    //config.follow(rightLeader);
-    //rightFollower.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    config.follow(leftLeader);
+    leftFollower.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    config.follow(rightLeader);
+    rightFollower.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // Remove following, then apply config to right leader
     //config.disableFollowerMode();

@@ -3,9 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import frc.robot.subsystems.IntakeRotater;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -70,6 +67,7 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final int LEFT_CLIMBER_ID = 9;
     public static final int RIGHT_CLIMBER_ID = 10;
+    public static final int CLIMBER_VOLTAGE = 40;
   }
   public static final class IntakeConstants {
     public static final int INTAKE_ROTATER_ID = 11;

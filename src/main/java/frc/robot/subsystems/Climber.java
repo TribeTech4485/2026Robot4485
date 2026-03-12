@@ -5,19 +5,25 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import static frc.robot.Constants.ClimberConstants;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   private final SparkMax leftClimber;
+  
   private final SparkMax rightClimber;
   public Climber() {
     leftClimber = new SparkMax(ClimberConstants.LEFT_CLIMBER_ID, MotorType.kBrushless);
     rightClimber = new SparkMax(ClimberConstants.RIGHT_CLIMBER_ID, MotorType.kBrushless);
+    SparkMaxConfig config = new SparkMaxConfig();
+    config.voltageCompensation(12);
+    config.smartCurrentLimit(ClimberConstants.CLIMBER_VOLTAGE);
   }
   
   public Command climbUp() {
