@@ -39,7 +39,6 @@ public class Intake extends Command {
   @Override
   public void end(boolean interrupted) {
     fuelSubsystem.setIntakeRoller(0);
-    fuelSubsystem.setFeederRoller(0);
   }
 
   // Returns true when the command should end.

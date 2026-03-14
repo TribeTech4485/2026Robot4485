@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
 
 import frc.robot.commands.Drive;
-import frc.robot.commands.Conveyor;
+import frc.robot.commands.Intake;
 
 import frc.robot.commands.DoNothing;
 
@@ -25,13 +25,13 @@ import frc.robot.commands.CABTSP;
 import frc.robot.commands.RightClimbAuto;
 import frc.robot.commands.RATCSP;
 
-import frc.robot.commands.Intake;
 
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FuelSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.IntakeRotater;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Conveyor;
 
 public class RobotContainer {
 
@@ -41,7 +41,8 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final IntakeRotater intakeRotater = new IntakeRotater();
   private final Climber climb = new Climber();
-  
+  private final Conveyor convey = new Conveyor();
+
   private final CommandXboxController driverController =
       new CommandXboxController(DRIVER_CONTROLLER_PORT);
 
@@ -57,25 +58,25 @@ public class RobotContainer {
 
     autoChooser.setDefaultOption(
          "DoNothing",
-        new DoNothing(driveSubsystem));
+        new DoNothing(driveSubsystem,fuelSubsystem,shooter,convey));
         autoChooser.addOption(
         "LeftClimbAuto",
-        new LeftClimbAuto(driveSubsystem,fuelSubsystem,shooter));
+        new LeftClimbAuto(driveSubsystem,fuelSubsystem,shooter,convey));
         autoChooser.addOption(
         "CenterClimbAuto",
-        new CenterClimbAuto(driveSubsystem,fuelSubsystem,shooter));
+        new CenterClimbAuto(driveSubsystem,fuelSubsystem,shooter,convey));
         autoChooser.addOption(
         "RightClimbAuto",
-        new RightClimbAuto(driveSubsystem,fuelSubsystem,shooter));
+        new RightClimbAuto(driveSubsystem,fuelSubsystem,shooter,convey));
         autoChooser.addOption(
         "CenterAutoBackToStartPosition",
-        new CABTSP(driveSubsystem,fuelSubsystem,shooter));
+        new CABTSP(driveSubsystem,fuelSubsystem,shooter,convey));
         autoChooser.addOption(
         "RightAutoToCenterStartPosition",
-        new RATCSP(driveSubsystem,fuelSubsystem,shooter));
+        new RATCSP(driveSubsystem,fuelSubsystem,shooter,convey));
         autoChooser.addOption(
         "leftAutoToCenterStartPosition",
-        new LATCSP(driveSubsystem,fuelSubsystem,shooter));
+        new LATCSP(driveSubsystem,fuelSubsystem,shooter,convey));
 
     SmartDashboard.putData("Auto Mode", autoChooser);
   }
@@ -97,7 +98,11 @@ public class RobotContainer {
         .onTrue(shooter.stopCommand());
   
     operatorController.rightBumper()
-        .whileTrue(new Conveyor(fuelSubsystem));
+        .whileTrue(convey.ConveyorForword())
+        .whileFalse(convey.stop());
+    operatorController.povUp()
+    .whileTrue(convey.ConveyorBackword())
+    .whileFalse(convey.stop());
 
     operatorController.a()
         .whileTrue(climb.climbUp())

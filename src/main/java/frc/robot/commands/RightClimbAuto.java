@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FuelSubsystem;
 import frc.robot.subsystems.Shooter;
@@ -13,7 +14,7 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RightClimbAuto extends SequentialCommandGroup {
   /** Creates a new ExampleAuto. */
-  public RightClimbAuto(DriveSubsystem driveSubsystem,FuelSubsystem fuelSubsystem,Shooter shooter) {
+  public RightClimbAuto(DriveSubsystem driveSubsystem,FuelSubsystem fuelSubsystem,Shooter shooter,Conveyor convey) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -24,9 +25,10 @@ public class RightClimbAuto extends SequentialCommandGroup {
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(1),
     new AutoDrive(driveSubsystem, 0,-.6).withTimeout(.16),
     new AutoDrive(driveSubsystem, .25, 0).withTimeout(.10),
-    shooter.shootCommand().withTimeout(1),
-    new Conveyor(fuelSubsystem).withTimeout(5),
+    shooter.autoCommand().withTimeout(3),
+    convey.ConveyorForword().withTimeout(5),
     shooter.stopCommand().withTimeout(.01),
+    convey.stop().withTimeout(0.01),
     new AutoDrive(driveSubsystem, -.25, 0).withTimeout(.10),
     new AutoDrive(driveSubsystem, 0, .5).withTimeout(.40),
     new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.25),

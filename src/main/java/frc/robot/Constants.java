@@ -40,7 +40,6 @@ public final class Constants {
     public static final int LAUNCHER_MOTOR_CURRENT_LIMIT = 40;
     public static final int INTAKE_MOTOR_CURRENT_LIMIT = 40; 
     public static final int CONVEYOR_MOTOR_CURRENT_LIMIT = 40;       
-
     // Voltage values for various fuel operations. These values may need to be tuned
     // based on exact robot construction.
     // See the Software Guide for tuning information

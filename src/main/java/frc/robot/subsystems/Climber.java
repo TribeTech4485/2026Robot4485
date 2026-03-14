@@ -9,7 +9,12 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClimberConstants;
 
+import static frc.robot.Constants.ClimberConstants;
+
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import static frc.robot.Constants.ClimberConstants;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -19,23 +24,28 @@ public class Climber extends SubsystemBase {
   
   private final SparkMax rightClimber;
   public Climber() {
+
     leftClimber = new SparkMax(ClimberConstants.LEFT_CLIMBER_ID, MotorType.kBrushless);
     rightClimber = new SparkMax(ClimberConstants.RIGHT_CLIMBER_ID, MotorType.kBrushless);
+
     SparkMaxConfig config = new SparkMaxConfig();
     config.voltageCompensation(12);
     config.smartCurrentLimit(ClimberConstants.CLIMBER_VOLTAGE);
+
+    leftClimber.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    rightClimber.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
   
   public Command climbUp() {
     return run(() -> {
-      leftClimber.set(0.5);
-      rightClimber.set(-0.5);
+      leftClimber.set(0.75);
+      rightClimber.set(-0.75);
     });
   }
   public Command climbDown() {
     return run(() -> {
-      leftClimber.set(-0.5);
-      rightClimber.set(0.5);
+      leftClimber.set(-0.75);
+      rightClimber.set(0.75);
     });
   }
   public Command stopClimb() {

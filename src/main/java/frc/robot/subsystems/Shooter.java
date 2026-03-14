@@ -71,12 +71,18 @@ public class Shooter extends SubsystemBase {
 
   // Shoot at full speed
   public Command shootCommand() {
-    return run(() -> setTargetRPM(-3740));
+    return run(() -> setTargetRPM(-3500));
+  }
+  public Command autoCommand() {
+    return run(() -> setTargetRPM(-3300));
+  }
+  public Command nothingAutoShoot() {
+    return run(() -> setTargetRPM(-2500));
   }
 
   // Idle speed
   public Command idleCommand() {
-    return run(() -> setTargetRPM(-3000));
+    return run(() -> setTargetRPM(-2700));
   }
 
   // Stop shooter
