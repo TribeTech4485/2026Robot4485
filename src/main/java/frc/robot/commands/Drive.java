@@ -34,7 +34,7 @@ public class Drive extends Command {
   }
 
   double proccessInput(double input) {
-    return smartExp(deadband(input, 0.15), 1.5);
+    return smartExp(deadband(input, 0.15), 2);
   }
 
   public Drive(DriveSubsystem driveSystem, CommandXboxController driverController) {
@@ -56,8 +56,10 @@ public class Drive extends Command {
   // controllable.
   @Override
   public void execute() {
-    driveSubsystem.driveArcade(proccessInput(controller.getLeftY()),
-        proccessInput(controller.getRightX()));
+    double a = proccessInput(controller.getLeftY());
+    double b = proccessInput(controller.getRightX());
+    // System.out.println("A=" + a + " B=" + b);
+    driveSubsystem.driveArcade(a, b);
   }
 
   // Called once the command ends or is interrupted.
