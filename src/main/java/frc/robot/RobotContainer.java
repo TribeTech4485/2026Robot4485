@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
 
 import frc.robot.commands.Drive;
-import frc.robot.commands.Intake;
+import frc.robot.commands.IntakeCommand;
 
 import frc.robot.commands.DoNothing;
 
@@ -24,10 +24,10 @@ import frc.robot.commands.CABTSP;
 
 import frc.robot.commands.RightClimbAuto;
 import frc.robot.commands.RATCSP;
-
+import frc.robot.commands.RATPPAS;
 
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.FuelSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.IntakeRotater;
 import frc.robot.subsystems.Climber;
@@ -35,97 +35,93 @@ import frc.robot.subsystems.Conveyor;
 
 public class RobotContainer {
 
-  // Subsystems
-  private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final FuelSubsystem fuelSubsystem = new FuelSubsystem();
-  private final Shooter shooter = new Shooter();
-  private final IntakeRotater intakeRotater = new IntakeRotater();
-  private final Climber climb = new Climber();
-  private final Conveyor convey = new Conveyor();
+    // Subsystems
+    private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+    private final Intake fuelSubsystem = new Intake();
+    private final Shooter shooter = new Shooter();
+    private final IntakeRotater intakeRotater = new IntakeRotater();
+    private final Climber climb = new Climber();
+    private final Conveyor convey = new Conveyor();
 
-  private final CommandXboxController driverController =
-      new CommandXboxController(DRIVER_CONTROLLER_PORT);
+    private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
 
-  private final CommandXboxController operatorController =
-      new CommandXboxController(OPERATOR_CONTROLLER_PORT);
+    private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
 
-  
-  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-  public RobotContainer() {
+    public RobotContainer() {
 
-    configureBindings();
+        configureBindings();
 
-    autoChooser.setDefaultOption(
-         "DoNothing",
-        new DoNothing(driveSubsystem,fuelSubsystem,shooter,convey));
+        autoChooser.setDefaultOption(
+                "don't Move And Shoot",
+                new DoNothing(driveSubsystem, fuelSubsystem, shooter, convey));
         autoChooser.addOption(
-        "LeftClimbAuto",
-        new LeftClimbAuto(driveSubsystem,fuelSubsystem,shooter,convey));
+                "Left Climb Auto",
+                new LeftClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
         autoChooser.addOption(
-        "CenterClimbAuto",
-        new CenterClimbAuto(driveSubsystem,fuelSubsystem,shooter,convey));
+                "Center Climb Auto",
+                new CenterClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
         autoChooser.addOption(
-        "RightClimbAuto",
-        new RightClimbAuto(driveSubsystem,fuelSubsystem,shooter,convey));
+                "Right Climb Auto",
+                new RightClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
         autoChooser.addOption(
-        "CenterAutoBackToStartPosition",
-        new CABTSP(driveSubsystem,fuelSubsystem,shooter,convey));
+                "Center Auto Back To Start Position",
+                new CABTSP(driveSubsystem, fuelSubsystem, shooter, convey));
         autoChooser.addOption(
-        "RightAutoToCenterStartPosition",
-        new RATCSP(driveSubsystem,fuelSubsystem,shooter,convey));
+                "Right Auto To Center Start Position",
+                new RATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
         autoChooser.addOption(
-        "leftAutoToCenterStartPosition",
-        new LATCSP(driveSubsystem,fuelSubsystem,shooter,convey));
+                "Left Auto To Center Start Position",
+                new LATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
+        autoChooser.addOption(
+                "Right Auto To Player Pickup And Shoot",
+                new RATPPAS(driveSubsystem, fuelSubsystem, shooter, convey));
 
-    SmartDashboard.putData("Auto Mode", autoChooser);
-  }
+        SmartDashboard.putData("Auto Mode", autoChooser);
+    }
 
-  private void configureBindings() {
+    private void configureBindings() {
 
-    
+        operatorController.leftTrigger()
+                .whileTrue(new IntakeCommand(fuelSubsystem));
 
-    
-    operatorController.leftTrigger()
-        .whileTrue(new Intake(fuelSubsystem));
+        operatorController.rightTrigger()
+                .onTrue(shooter.shootCommand())
+                .onFalse(shooter.idleCommand());
 
-    
-    operatorController.rightTrigger()
-        .onTrue(shooter.shootCommand())
-        .onFalse(shooter.idleCommand());
+        operatorController.leftBumper()
+                .onTrue(shooter.stopCommand());
 
-    operatorController.leftBumper()
-        .onTrue(shooter.stopCommand());
-  
-    operatorController.rightBumper()
-        .whileTrue(convey.ConveyorForword())
-        .whileFalse(convey.stop());
-    operatorController.povUp()
-    .whileTrue(convey.ConveyorBackword())
-    .whileFalse(convey.stop());
+        operatorController.rightBumper()
+                .whileTrue(convey.ConveyorForword())
+                .whileFalse(convey.stop());
+        operatorController.povUp()
+                .whileTrue(convey.ConveyorBackword())
+                .whileFalse(convey.stop());
 
-    operatorController.a()
-        .whileTrue(climb.climbUp())
-        .onFalse(climb.stopClimb());
-    operatorController.b()
-        .whileTrue(climb.climbDown())
-        .onFalse(climb.stopClimb());
+        operatorController.a()
+                .whileTrue(climb.climbUp())
+                .onFalse(climb.stopClimb());
+        operatorController.b()
+                .whileTrue(climb.climbDown())
+                .onFalse(climb.stopClimb());
 
-    operatorController.x()
-        .whileTrue(intakeRotater.rotateIntakeUp())
-        .onFalse(intakeRotater.stopIntakeRotation());
-    operatorController.y()
-        .whileTrue(intakeRotater.rotateIntakeDown())
-        .onFalse(intakeRotater.stopIntakeRotation());
+        operatorController.x()
+                .whileTrue(intakeRotater.rotateIntakeUp());
 
-    driveSubsystem.setDefaultCommand(
-        new Drive(driveSubsystem, driverController));
+        operatorController.y()
+                .whileTrue(intakeRotater.rotateIntakeDown());
 
-    fuelSubsystem.setDefaultCommand(
-        fuelSubsystem.run(() -> fuelSubsystem.stop()));
-  }
+        driveSubsystem.setDefaultCommand(
+                new Drive(driveSubsystem, driverController));
 
-  public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
-  }
+        fuelSubsystem.setDefaultCommand(
+                fuelSubsystem.run(() -> fuelSubsystem.stop()));
+
+    }
+
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 }

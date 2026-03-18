@@ -10,18 +10,19 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.FuelConstants.*;
 
-public class FuelSubsystem extends SubsystemBase {
+public class Intake extends SubsystemBase {
   //private final SparkMax feederRoller;
   private final SparkMax intakeRoller;
   //private final SparkMax conveyorRoller;
  // private final SparkMax launcherRoller;
 
   /** Creates a new CANBallSubsystem. */
-  public FuelSubsystem() {
+  public Intake() {
     // create brushless motors for each of the motors on the launcher mechanism
     intakeRoller = new SparkMax(INTAKE_MOTOR_ID, MotorType.kBrushless);
    // feederRoller = new SparkMax(FEEDER_MOTOR_ID, MotorType.kBrushless);
@@ -95,5 +96,6 @@ public class FuelSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Intake on", intakeRoller.get() != 0);
   }
 }

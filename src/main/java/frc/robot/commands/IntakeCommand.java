@@ -5,16 +5,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.FuelSubsystem;
+import frc.robot.subsystems.Intake;
 import static frc.robot.Constants.FuelConstants.*;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Intake extends Command {
+public class IntakeCommand extends Command {
   /** Creates a new Intake. */
 
-  FuelSubsystem fuelSubsystem;
+  Intake fuelSubsystem;
 
-  public Intake(FuelSubsystem fuelSystem) {
+  public IntakeCommand(Intake fuelSystem) {
     addRequirements(fuelSystem);
     this.fuelSubsystem = fuelSystem;
   }

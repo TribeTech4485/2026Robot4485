@@ -79,5 +79,7 @@ public class Conveyor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Conveyor on", conveyorRoller.get() != 0);
+    SmartDashboard.putBoolean("Feeder on", feederRoller.get() != 0);
   }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -23,7 +24,7 @@ public class Shooter extends SubsystemBase {
   private double targetRPM = 0;
 
   private static final double kP = 0.0003;
-  //16541;
+  // 16541;
   private static final double kI = 0.0;
   private static final double kD = 0.0;
   private static final double kFF = 0.0001;
@@ -73,9 +74,11 @@ public class Shooter extends SubsystemBase {
   public Command shootCommand() {
     return run(() -> setTargetRPM(-3500));
   }
+
   public Command autoCommand() {
     return run(() -> setTargetRPM(-3300));
   }
+
   public Command nothingAutoShoot() {
     return run(() -> setTargetRPM(-2500));
   }
@@ -88,5 +91,13 @@ public class Shooter extends SubsystemBase {
   // Stop shooter
   public Command stopCommand() {
     return run(() -> setTargetRPM(0));
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("shooter RPM", getRPM());
+    SmartDashboard.putNumber("shooter TargetRPM", targetRPM);
+    SmartDashboard.putBoolean("shooter at target", atTargetRPM());
   }
 }

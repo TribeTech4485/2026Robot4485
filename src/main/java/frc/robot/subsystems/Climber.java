@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
@@ -15,14 +16,14 @@ import static frc.robot.Constants.ClimberConstants;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import static frc.robot.Constants.ClimberConstants;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   private final SparkMax leftClimber;
-  
+
   private final SparkMax rightClimber;
+
   public Climber() {
 
     leftClimber = new SparkMax(ClimberConstants.LEFT_CLIMBER_ID, MotorType.kBrushless);
@@ -32,22 +33,25 @@ public class Climber extends SubsystemBase {
     config.voltageCompensation(12);
     config.smartCurrentLimit(ClimberConstants.CLIMBER_VOLTAGE);
 
-    leftClimber.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     rightClimber.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    config.inverted(true);
+    leftClimber.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
-  
+
   public Command climbUp() {
     return run(() -> {
       leftClimber.set(0.75);
-      rightClimber.set(-0.75);
-    });
-  }
-  public Command climbDown() {
-    return run(() -> {
-      leftClimber.set(-0.75);
       rightClimber.set(0.75);
     });
   }
+
+  public Command climbDown() {
+    return run(() -> {
+      leftClimber.set(0.75);
+      rightClimber.set(0.75);
+    });
+  }
+
   public Command stopClimb() {
     return run(() -> {
       leftClimber.set(0);
@@ -58,5 +62,9 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("left Climber Up", leftClimber.get() > 0);
+    SmartDashboard.putBoolean("right Climber up", rightClimber.get() < 0);
+    SmartDashboard.putBoolean("left Climber Down", leftClimber.get() < 0);
+    SmartDashboard.putBoolean("right Climber down", rightClimber.get() > 0);
   }
 }
