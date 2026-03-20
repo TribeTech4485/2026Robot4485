@@ -23,6 +23,7 @@ import frc.robot.commands.CenterClimbAuto;
 import frc.robot.commands.CABTSP;
 
 import frc.robot.commands.RightClimbAuto;
+import frc.robot.commands.ShootCommandGenerator;
 import frc.robot.commands.RATCSP;
 import frc.robot.commands.RATPPAS;
 
@@ -82,8 +83,8 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-
-        operatorController.leftTrigger()
+        ShootCommandGenerator SCG = new ShootCommandGenerator(shooter, convey);
+        /*operatorController.leftTrigger()
                 .whileTrue(new IntakeCommand(fuelSubsystem));
 
         operatorController.rightTrigger()
@@ -112,13 +113,30 @@ public class RobotContainer {
 
         operatorController.y()
                 .whileTrue(intakeRotater.rotateIntakeDown());
-
+*/
         driveSubsystem.setDefaultCommand(
                 new Drive(driveSubsystem, driverController));
 
         fuelSubsystem.setDefaultCommand(
                 fuelSubsystem.run(() -> fuelSubsystem.stop()));
 
+        operatorController.leftTrigger()
+        .whileTrue(new IntakeCommand(fuelSubsystem));
+
+        operatorController.rightTrigger()
+        .whileTrue(SCG.shootCommand());
+        operatorController.rightBumper()
+        .whileTrue(convey.ConveyorBackword());
+        operatorController.povUp()
+        .whileTrue(climb.climbUp());
+        operatorController.povDown()
+        .whileTrue(climb.climbDown());
+        operatorController.x()
+        .whileTrue(intakeRotater.rotateIntakeUp());
+        operatorController.y()
+        .whileTrue(intakeRotater.rotateIntakeDown());
+        operatorController.leftStick().or(operatorController.rightStick())
+        .onTrue(shooter.stopCommand());
     }
 
     public Command getAutonomousCommand() {

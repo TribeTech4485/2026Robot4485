@@ -59,15 +59,21 @@ public class Conveyor extends SubsystemBase {
   }
 
   public Command ConveyorForword() {
-    return run (() -> {
-      feederRoller.set(-8);
-      conveyorRoller.set(8);
+    return run(() -> {
+      feederRoller.set(-1);
+      conveyorRoller.set(1);
+    }).finallyDo(() -> {
+      feederRoller.set(0);
+      conveyorRoller.set(0);
     });
   }
   public Command ConveyorBackword() {
     return run (() -> {
       feederRoller.set(1);
       conveyorRoller.set(-1);
+    }).finallyDo(() -> {
+      feederRoller.set(0);
+      conveyorRoller.set(0);
     });
   }
   public Command stop() {

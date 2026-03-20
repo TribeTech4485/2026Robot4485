@@ -26,15 +26,12 @@ public class Drive extends Command {
 
   /** Exponent that keeps the sign of the input */
   public static double smartExp(double x, double exponent) {
-    double result = Math.pow(x, exponent);
-    if (Math.signum(result) == Math.signum(x)) {
-      return result;
-    }
-    return -result;
+    double result = Math.pow(Math.abs(x), exponent);
+    return result * Math.signum(x);
   }
 
   double proccessInput(double input) {
-    return smartExp(deadband(input, 0.15), 2);
+    return smartExp(deadband(input, 0.15), 1.5) * 0.75;
   }
 
   public Drive(DriveSubsystem driveSystem, CommandXboxController driverController) {

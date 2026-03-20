@@ -42,6 +42,9 @@ public class Climber extends SubsystemBase {
     return run(() -> {
       leftClimber.set(0.75);
       rightClimber.set(0.75);
+    }).finallyDo(() -> {
+      leftClimber.set(0);
+      rightClimber.set(0);
     });
   }
 
@@ -49,6 +52,9 @@ public class Climber extends SubsystemBase {
     return run(() -> {
       leftClimber.set(0.75);
       rightClimber.set(0.75);
+    }).finallyDo(() -> {
+      leftClimber.set(0);
+      rightClimber.set(0);
     });
   }
 

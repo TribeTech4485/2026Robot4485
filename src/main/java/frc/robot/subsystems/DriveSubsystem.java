@@ -122,12 +122,12 @@ public class DriveSubsystem extends SubsystemBase {
     rightFollower.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // Remove following, then apply config to right leader
-    //config.disableFollowerMode();
-    //rightLeader.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    config.disableFollowerMode();
+    rightLeader.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     // Set config to inverted and then apply to left leader. Set Left side inverted
     // so that postive values drive both sides forward
-    //config.inverted(true);
-   //leftLeader.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // config.inverted(true);
+   leftLeader.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override

@@ -6,7 +6,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -72,25 +75,28 @@ public class Shooter extends SubsystemBase {
 
   // Shoot at full speed
   public Command shootCommand() {
-    return run(() -> setTargetRPM(-3500));
+    return new InstantCommand(() -> setTargetRPM(-3500));
   }
 
   public Command autoCommand() {
-    return run(() -> setTargetRPM(-3300));
+    return new InstantCommand(() -> setTargetRPM(-3300));
   }
 
   public Command nothingAutoShoot() {
-    return run(() -> setTargetRPM(-2500));
+    return new InstantCommand(() -> setTargetRPM(-2500));
   }
 
   // Idle speed
   public Command idleCommand() {
-    return run(() -> setTargetRPM(-2700));
+    return new InstantCommand(() -> setTargetRPM(-2700));
   }
 
   // Stop shooter
   public Command stopCommand() {
-    return run(() -> setTargetRPM(0));
+    return new InstantCommand(() -> setTargetRPM(0));
+  }
+  public Command waitTillSpeed() {
+    return new WaitUntilCommand((() -> atTargetRPM()));
   }
 
   @Override
