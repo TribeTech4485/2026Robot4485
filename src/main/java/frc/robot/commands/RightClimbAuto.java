@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DriveSubsystem;
@@ -14,28 +15,27 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RightClimbAuto extends SequentialCommandGroup {
   /** Creates a new ExampleAuto. */
-  public RightClimbAuto(DriveSubsystem driveSubsystem,Intake fuelSubsystem,Shooter shooter,Conveyor convey) {
+  public RightClimbAuto(DriveSubsystem driveSubsystem, Intake fuelSubsystem, Shooter shooter, Conveyor convey) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    // Drive backwards for .25 seconds. The driveArcadeAuto command factory
-    // intentionally creates a command which does not end which allows us to control
-    // the timing using the withTimeout decorator
-    shooter.idleCommand().withTimeout(.5),
-    new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(1),
-    new AutoDrive(driveSubsystem, 0,-.6).withTimeout(.16),
-    new AutoDrive(driveSubsystem, .25, 0).withTimeout(.10),
-    shooter.autoCommand().withTimeout(3),
-    convey.ConveyorForword().withTimeout(5),
-    shooter.stopCommand().withTimeout(.01),
-    convey.stop().withTimeout(0.01),
-    new AutoDrive(driveSubsystem, -.25, 0).withTimeout(.10),
-    new AutoDrive(driveSubsystem, 0, .5).withTimeout(.40),
-    new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.25),
-    new AutoDrive(driveSubsystem, 0, -0.5).withTimeout(.30),
-    new AutoDrive(driveSubsystem,-0.5,  0.0).withTimeout(.60),
-    new AutoDrive(driveSubsystem, 0,-.5).withTimeout(.25),
-    new AutoDrive(driveSubsystem,-.5,0).withTimeout(.3)
-    );
+        // Drive backwards for .25 seconds. The driveArcadeAuto command factory
+        // intentionally creates a command which does not end which allows us to control
+        // the timing using the withTimeout decorator
+        shooter.idleCommand().withTimeout(.5),
+        new AutoDrive(driveSubsystem, -0.45, 0.0).withTimeout(1),
+        new AutoDrive(driveSubsystem, 0, -.57).withTimeout(.16),
+        new AutoDrive(driveSubsystem, .25, 0).withTimeout(.10),
+        shooter.autoCommand().withTimeout(3),
+        convey.ConveyorForword().withTimeout(5),
+        shooter.stopCommand().withTimeout(.01),
+        convey.stop().withTimeout(0.01),
+        new AutoDrive(driveSubsystem, -.25, 0).withTimeout(.10),
+        new AutoDrive(driveSubsystem, 0, .5).withTimeout(.40),
+        new AutoDrive(driveSubsystem, -0.5, 0.0).withTimeout(.25),
+        new AutoDrive(driveSubsystem, 0, -0.5).withTimeout(.30),
+        new AutoDrive(driveSubsystem, -0.5, 0.0).withTimeout(.60),
+        new AutoDrive(driveSubsystem, 0, -.5).withTimeout(.25),
+        new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.3));
   }
 }

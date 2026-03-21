@@ -36,110 +36,116 @@ import frc.robot.subsystems.Conveyor;
 
 public class RobotContainer {
 
-    // Subsystems
-    private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-    private final Intake fuelSubsystem = new Intake();
-    private final Shooter shooter = new Shooter();
-    private final IntakeRotater intakeRotater = new IntakeRotater();
-    private final Climber climb = new Climber();
-    private final Conveyor convey = new Conveyor();
+        // Subsystems
+        private final DriveSubsystem driveSubsystem = new DriveSubsystem();
+        private final Intake fuelSubsystem = new Intake();
+        private final Shooter shooter = new Shooter();
+        private final IntakeRotater intakeRotater = new IntakeRotater();
+        private final Climber climb = new Climber();
+        private final Conveyor convey = new Conveyor();
 
-    private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
+        private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
 
-    private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
+        private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
 
-    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+        private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-    public RobotContainer() {
+        public RobotContainer() {
 
-        configureBindings();
+                configureBindings();
 
-        autoChooser.setDefaultOption(
-                "don't Move And Shoot",
-                new DoNothing(driveSubsystem, fuelSubsystem, shooter, convey));
-        autoChooser.addOption(
-                "Left Climb Auto",
-                new LeftClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
-        autoChooser.addOption(
-                "Center Climb Auto",
-                new CenterClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
-        autoChooser.addOption(
-                "Right Climb Auto",
-                new RightClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
-        autoChooser.addOption(
-                "Center Auto Back To Start Position",
-                new CABTSP(driveSubsystem, fuelSubsystem, shooter, convey));
-        autoChooser.addOption(
-                "Right Auto To Center Start Position",
-                new RATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
-        autoChooser.addOption(
-                "Left Auto To Center Start Position",
-                new LATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
-        autoChooser.addOption(
-                "Right Auto To Player Pickup And Shoot",
-                new RATPPAS(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.setDefaultOption(
+                                "don't Move And Shoot",
+                                new DoNothing(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Left Climb Auto",
+                                new LeftClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Center Climb Auto",
+                                new CenterClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Right Climb Auto",
+                                new RightClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Center Auto Back To Start Position",
+                                new CABTSP(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Right Auto To Center Start Position",
+                                new RATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Left Auto To Center Start Position",
+                                new LATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Right Auto To Player Pickup And Shoot",
+                                new RATPPAS(driveSubsystem, fuelSubsystem, shooter, convey));
 
-        SmartDashboard.putData("Auto Mode", autoChooser);
-    }
+                SmartDashboard.putData("Auto Mode", autoChooser);
+        }
 
-    private void configureBindings() {
-        ShootCommandGenerator SCG = new ShootCommandGenerator(shooter, convey);
-        /*operatorController.leftTrigger()
-                .whileTrue(new IntakeCommand(fuelSubsystem));
+        private void configureBindings() {
+                ShootCommandGenerator SCG = new ShootCommandGenerator(shooter, convey);
+                /*
+                 * operatorController.leftTrigger()
+                 * .whileTrue(new IntakeCommand(fuelSubsystem));
+                 * 
+                 * operatorController.rightTrigger()
+                 * .onTrue(shooter.shootCommand())
+                 * .onFalse(shooter.idleCommand());
+                 * 
+                 * operatorController.leftBumper()
+                 * .onTrue(shooter.stopCommand());
+                 * 
+                 * operatorController.rightBumper()
+                 * .whileTrue(convey.ConveyorForword())
+                 * .whileFalse(convey.stop());
+                 * operatorController.povUp()
+                 * .whileTrue(convey.ConveyorBackword())
+                 * .whileFalse(convey.stop());
+                 * 
+                 * operatorController.a()
+                 * .whileTrue(climb.climbUp())
+                 * .onFalse(climb.stopClimb());
+                 * operatorController.b()
+                 * .whileTrue(climb.climbDown())
+                 * .onFalse(climb.stopClimb());
+                 * 
+                 * operatorController.x()
+                 * .whileTrue(intakeRotater.rotateIntakeUp());
+                 * 
+                 * operatorController.y()
+                 * .whileTrue(intakeRotater.rotateIntakeDown());
+                 */
+                driveSubsystem.setDefaultCommand(
+                                new Drive(driveSubsystem, driverController));
 
-        operatorController.rightTrigger()
-                .onTrue(shooter.shootCommand())
-                .onFalse(shooter.idleCommand());
+                fuelSubsystem.setDefaultCommand(
+                                fuelSubsystem.run(() -> fuelSubsystem.stop()));
 
-        operatorController.leftBumper()
-                .onTrue(shooter.stopCommand());
+                operatorController.leftTrigger()
+                                .toggleOnTrue(new IntakeCommand(fuelSubsystem));
 
-        operatorController.rightBumper()
-                .whileTrue(convey.ConveyorForword())
-                .whileFalse(convey.stop());
-        operatorController.povUp()
-                .whileTrue(convey.ConveyorBackword())
-                .whileFalse(convey.stop());
+                operatorController.rightTrigger()
+                                .whileTrue(SCG.shootCommand())
+                                .whileFalse(shooter.idleCommand());
+                operatorController.rightBumper()
+                                .whileTrue(convey.ConveyorBackword());
+                operatorController.povUp()
+                                .whileTrue(climb.climbUp());
+                operatorController.povDown()
+                                .whileTrue(climb.climbDown());
+                operatorController.y()
+                                .whileTrue(intakeRotater.rotateIntakeUp());
+                operatorController.x()
+                                .whileTrue(intakeRotater.rotateIntakeDown());
+                operatorController.leftStick().or(operatorController.rightStick().or(operatorController.leftBumper()))
+                                .onTrue(shooter.stopCommand());
+                operatorController.a()
+                                .whileTrue(shooter.shootCommand());
+                operatorController.b()
+                                .whileTrue(shooter.idleCommand());
+        }
 
-        operatorController.a()
-                .whileTrue(climb.climbUp())
-                .onFalse(climb.stopClimb());
-        operatorController.b()
-                .whileTrue(climb.climbDown())
-                .onFalse(climb.stopClimb());
-
-        operatorController.x()
-                .whileTrue(intakeRotater.rotateIntakeUp());
-
-        operatorController.y()
-                .whileTrue(intakeRotater.rotateIntakeDown());
-*/
-        driveSubsystem.setDefaultCommand(
-                new Drive(driveSubsystem, driverController));
-
-        fuelSubsystem.setDefaultCommand(
-                fuelSubsystem.run(() -> fuelSubsystem.stop()));
-
-        operatorController.leftTrigger()
-        .whileTrue(new IntakeCommand(fuelSubsystem));
-
-        operatorController.rightTrigger()
-        .whileTrue(SCG.shootCommand());
-        operatorController.rightBumper()
-        .whileTrue(convey.ConveyorBackword());
-        operatorController.povUp()
-        .whileTrue(climb.climbUp());
-        operatorController.povDown()
-        .whileTrue(climb.climbDown());
-        operatorController.x()
-        .whileTrue(intakeRotater.rotateIntakeUp());
-        operatorController.y()
-        .whileTrue(intakeRotater.rotateIntakeDown());
-        operatorController.leftStick().or(operatorController.rightStick())
-        .onTrue(shooter.stopCommand());
-    }
-
-    public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
-    }
+        public Command getAutonomousCommand() {
+                return autoChooser.getSelected();
+        }
 }

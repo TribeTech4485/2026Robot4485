@@ -56,7 +56,7 @@ public class Drive extends Command {
     double a = proccessInput(controller.getLeftY());
     double b = proccessInput(controller.getRightX());
     // System.out.println("A=" + a + " B=" + b);
-    driveSubsystem.driveArcade(a, b);
+    driveSubsystem.driveArcade(b, a);
   }
 
   // Called once the command ends or is interrupted.

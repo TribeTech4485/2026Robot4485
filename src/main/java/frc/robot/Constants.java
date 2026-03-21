@@ -24,7 +24,7 @@ public final class Constants {
 
     // Current limit for drivetrain motors. Typical is 40-60 for NEO motors and
     // 20-40 for NEO 550 motors. Set to 40 to limit power draw for now.
-    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 20;
+    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 35;
   }
 
   public static final class FuelConstants {

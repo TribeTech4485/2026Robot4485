@@ -18,7 +18,7 @@ public class CenterClimbAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     shooter.autoCommand().withTimeout(.1),
-    new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.85),
+    new AutoDrive(driveSubsystem, -.55, 0).withTimeout(.85),
     new AutoDrive(driveSubsystem, .5, 0).withTimeout(.1),
     new AutoDrive(driveSubsystem, 0, 0).withTimeout(1),
     convey.ConveyorForword().withTimeout(5),

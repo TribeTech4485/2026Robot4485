@@ -32,7 +32,7 @@ public class Shooter extends SubsystemBase {
   private static final double kD = 0.0;
   private static final double kFF = 0.0001;
 
-  private static final double RPM_TOLERANCE = 100;
+  private static final double RPM_TOLERANCE = 600;
 
   public Shooter() {
 
@@ -79,11 +79,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public Command autoCommand() {
-    return new InstantCommand(() -> setTargetRPM(-3300));
+    return new InstantCommand(() -> setTargetRPM(-3500));
   }
 
   public Command nothingAutoShoot() {
-    return new InstantCommand(() -> setTargetRPM(-2500));
+    return new InstantCommand(() -> setTargetRPM(-3050));
   }
 
   // Idle speed
@@ -95,6 +95,7 @@ public class Shooter extends SubsystemBase {
   public Command stopCommand() {
     return new InstantCommand(() -> setTargetRPM(0));
   }
+
   public Command waitTillSpeed() {
     return new WaitUntilCommand((() -> atTargetRPM()));
   }
