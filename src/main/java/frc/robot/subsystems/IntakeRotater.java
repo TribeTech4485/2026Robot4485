@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.Constants.IntakeConstants;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import static frc.robot.Constants.IntakeConstants;
@@ -39,8 +40,8 @@ public class IntakeRotater extends SubsystemBase {
     config.softLimit.forwardSoftLimit(IntakeConstants.MAX_LOWER);
     config.softLimit.reverseSoftLimit(IntakeConstants.MAX_UPPER);
     intakeRotater.configure(config, SparkMax.ResetMode.kResetSafeParameters, SparkMax.PersistMode.kPersistParameters);
-    rotaterPIDController.setGoal(intakeRotater.getEncoder().getPosition());
     intakeRotater.getEncoder().setPosition(IntakeConstants.STARTING_POS);
+    rotaterPIDController.setGoal(IntakeConstants.STARTING_POS);
   }
 
   public Command rotateIntakeUp() {
@@ -53,6 +54,10 @@ public class IntakeRotater extends SubsystemBase {
     return new InstantCommand(() -> {
       rotaterPIDController.setGoal(IntakeConstants.MAX_LOWER);
     });
+  }
+
+  public void holdPosistion() {
+    rotaterPIDController.setGoal(intakeRotater.getEncoder().getPosition());
   }
 
   @Override

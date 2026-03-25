@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static Object onInits;
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -71,6 +73,11 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
   }
 
+  @Override
+  public void disabledExit() {
+    m_robotContainer.intakeRotater.holdPosistion();
+  }
+
   /**
    * This autonomous runs the autonomous command selected by your
    * {@link RobotContainer} class.
@@ -81,7 +88,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-     CommandScheduler.getInstance().schedule(m_autonomousCommand);
+      CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
   }
 

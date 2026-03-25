@@ -37,12 +37,12 @@ import frc.robot.subsystems.Conveyor;
 public class RobotContainer {
 
         // Subsystems
-        private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-        private final Intake fuelSubsystem = new Intake();
-        private final Shooter shooter = new Shooter();
-        private final IntakeRotater intakeRotater = new IntakeRotater();
-        private final Climber climb = new Climber();
-        private final Conveyor convey = new Conveyor();
+        public final DriveSubsystem driveSubsystem = new DriveSubsystem();
+        public final Intake fuelSubsystem = new Intake();
+        public final Shooter shooter = new Shooter();
+        public final IntakeRotater intakeRotater = new IntakeRotater();
+        public final Climber climb = new Climber();
+        public final Conveyor convey = new Conveyor();
 
         private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
 
@@ -71,10 +71,10 @@ public class RobotContainer {
                                 new CABTSP(driveSubsystem, fuelSubsystem, shooter, convey));
                 autoChooser.addOption(
                                 "Right Auto To Center Start Position",
-                                new RATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
+                                new RATCSP(driveSubsystem, fuelSubsystem, shooter, convey, intakeRotater));
                 autoChooser.addOption(
                                 "Left Auto To Center Start Position",
-                                new LATCSP(driveSubsystem, fuelSubsystem, shooter, convey));
+                                new LATCSP(driveSubsystem, fuelSubsystem, shooter, convey, intakeRotater));
                 autoChooser.addOption(
                                 "Right Auto To Player Pickup And Shoot",
                                 new RATPPAS(driveSubsystem, fuelSubsystem, shooter, convey));

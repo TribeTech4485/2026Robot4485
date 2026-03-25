@@ -13,19 +13,18 @@ import frc.robot.subsystems.Shooter;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CABTSP extends SequentialCommandGroup {
   /** Creates a new CenterAuto. */
-  public CABTSP(DriveSubsystem driveSubsystem,Intake fuelSubsystem,Shooter shooter,Conveyor convey) {
+  public CABTSP(DriveSubsystem driveSubsystem, Intake fuelSubsystem, Shooter shooter, Conveyor convey) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    shooter.autoCommand().withTimeout(.1),
-    new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.85),
-    new AutoDrive(driveSubsystem, .5, 0).withTimeout(.1),
-    new AutoDrive(driveSubsystem, 0, 0).withTimeout(1),
-    convey.ConveyorForword().withTimeout(5),
-    shooter.stopCommand().withTimeout(0.01),
-    convey.stop().withTimeout(0.01),
-    new AutoDrive(driveSubsystem, .5, 0).withTimeout(.85),
-    new AutoDrive(driveSubsystem, 0, 0).withTimeout(1)
-    );
+        shooter.autoCommand().withTimeout(.1),
+        new AutoDrive(driveSubsystem, -.5, 0).withTimeout(1.3),
+        new AutoDrive(driveSubsystem, .5, 0).withTimeout(.1),
+        new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.5),
+        convey.ConveyorForword().withTimeout(5),
+        shooter.stopCommand().withTimeout(0.01),
+        convey.stop().withTimeout(0.01),
+        new AutoDrive(driveSubsystem, .5, 0).withTimeout(.85),
+        new AutoDrive(driveSubsystem, 0, 0).withTimeout(1));
   }
 }

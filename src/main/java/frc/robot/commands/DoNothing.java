@@ -21,6 +21,7 @@ public class DoNothing extends SequentialCommandGroup {
         shooter.nothingAutoShoot().withTimeout(4),
         new AutoDrive(driveSubsystem, -.35, 0).withTimeout(.5),
         new AutoDrive(driveSubsystem, .1, 0).withTimeout(.5),
+        new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.5),
         convey.ConveyorForword().withTimeout(5),
         shooter.stopCommand().withTimeout(0.01),
         convey.stop().withTimeout(0.01),
