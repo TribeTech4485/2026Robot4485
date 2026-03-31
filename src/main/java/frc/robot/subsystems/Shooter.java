@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
   // 16541;
   private static final double kI = 0.0;
   private static final double kD = 0.0;
-  private static final double kFF = 1/473d;
+  private static final double kFF = 0.0001;
 
   private static final double RPM_TOLERANCE = 600;
 
