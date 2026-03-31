@@ -26,6 +26,12 @@ import frc.robot.commands.RightClimbAuto;
 import frc.robot.commands.ShootCommandGenerator;
 import frc.robot.commands.RATCSP;
 import frc.robot.commands.RATPPAS;
+import frc.robot.commands.RAAS;
+import frc.robot.commands.LAAS;
+import frc.robot.commands.CABAS;
+import frc.robot.commands.RAASD;
+import frc.robot.commands.LAASD;
+import frc.robot.commands.CABASD;
 
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Intake;
@@ -57,15 +63,17 @@ public class RobotContainer {
                 autoChooser.setDefaultOption(
                                 "don't Move And Shoot",
                                 new DoNothing(driveSubsystem, fuelSubsystem, shooter, convey));
-                autoChooser.addOption(
-                                "Left Climb Auto",
-                                new LeftClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
-                autoChooser.addOption(
-                                "Center Climb Auto",
-                                new CenterClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
-                autoChooser.addOption(
-                                "Right Climb Auto",
-                                new RightClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
+                /*
+                 * autoChooser.addOption(
+                 * "Left Climb Auto",
+                 * new LeftClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
+                 * autoChooser.addOption(
+                 * "Center Climb Auto",
+                 * new CenterClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
+                 * autoChooser.addOption(
+                 * "Right Climb Auto",
+                 * new RightClimbAuto(driveSubsystem, fuelSubsystem, shooter, convey));
+                 */
                 autoChooser.addOption(
                                 "Center Auto Back To Start Position",
                                 new CABTSP(driveSubsystem, fuelSubsystem, shooter, convey));
@@ -75,9 +83,29 @@ public class RobotContainer {
                 autoChooser.addOption(
                                 "Left Auto To Center Start Position",
                                 new LATCSP(driveSubsystem, fuelSubsystem, shooter, convey, intakeRotater));
+                /*
+                 * autoChooser.addOption(
+                 * "Right Auto To Player Pickup And Shoot",
+                 * new RATPPAS(driveSubsystem, fuelSubsystem, shooter, convey));
+                 */
                 autoChooser.addOption(
-                                "Right Auto To Player Pickup And Shoot",
-                                new RATPPAS(driveSubsystem, fuelSubsystem, shooter, convey));
+                                "Center Auto Back And Stop Intake Up",
+                                new CABAS(driveSubsystem, fuelSubsystem, shooter, convey));
+                autoChooser.addOption(
+                                "Right Auto And Stop Intake Up",
+                                new RAAS(driveSubsystem, fuelSubsystem, shooter, convey, intakeRotater));
+                autoChooser.addOption(
+                                "Left Auto And Stop Intake Up",
+                                new LAAS(driveSubsystem, fuelSubsystem, shooter, convey, intakeRotater));
+                autoChooser.addOption(
+                                "Center Auto Back And Stop Intake Down",
+                                new CABASD(driveSubsystem, fuelSubsystem, shooter, convey,intakeRotater));
+                autoChooser.addOption(
+                                "Right Auto And Stop Intake Down",
+                                new RAASD(driveSubsystem, fuelSubsystem, shooter, convey, intakeRotater));
+                autoChooser.addOption(
+                                "Left Auto And Stop Intake Down",
+                                new LAASD(driveSubsystem, fuelSubsystem, shooter, convey, intakeRotater));
 
                 SmartDashboard.putData("Auto Mode", autoChooser);
         }

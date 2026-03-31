@@ -24,7 +24,7 @@ public final class Constants {
 
     // Current limit for drivetrain motors. Typical is 40-60 for NEO motors and
     // 20-40 for NEO 550 motors. Set to 40 to limit power draw for now.
-    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 35;
+    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
   }
 
   public static final class FuelConstants {
@@ -44,7 +44,7 @@ public final class Constants {
     // based on exact robot construction.
     // See the Software Guide for tuning information
     public static final double FEEDER_VOLTAGE = 12;
-    public static final double INTAKING_VOLTAGE = 10;
+    public static final double INTAKING_VOLTAGE = 12;
     public static final double LAUNCHING_VOLTAGE = 9;
     public static final double CONVEYOR_VOLTAGE = 10.6;
 

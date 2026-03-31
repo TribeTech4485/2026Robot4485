@@ -31,7 +31,7 @@ public class Drive extends Command {
   }
 
   double proccessInput(double input) {
-    return smartExp(deadband(input, 0.15), 1.5) * 0.75;
+    return smartExp(deadband(input, 0.15), 1) * 0.75;
   }
 
   public Drive(DriveSubsystem driveSystem, CommandXboxController driverController) {

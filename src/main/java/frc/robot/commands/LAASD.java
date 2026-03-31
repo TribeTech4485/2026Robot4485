@@ -14,9 +14,9 @@ import frc.robot.subsystems.IntakeRotater;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class LATCSP extends SequentialCommandGroup {
+public class LAASD extends SequentialCommandGroup {
   /** Creates a new ExampleAuto. */
-  public LATCSP(DriveSubsystem driveSubsystem, Intake fuelSubsystem, Shooter shooter, Conveyor convey,
+  public LAASD(DriveSubsystem driveSubsystem, Intake fuelSubsystem, Shooter shooter, Conveyor convey,
       IntakeRotater rotate) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -32,11 +32,6 @@ public class LATCSP extends SequentialCommandGroup {
         shooter.autoCommand().withTimeout(0.01),
         new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.5),
         convey.ConveyorForword().withTimeout(5),
-        shooter.stopCommand().withTimeout(.01),
-        rotate.rotateIntakeUp().withTimeout(0.01),
-        new AutoDrive(driveSubsystem, .5, 0).withTimeout(.5),
-        new AutoDrive(driveSubsystem, 0, .5).withTimeout(.25),
-        new AutoDrive(driveSubsystem, .5, 0).withTimeout(.25),
-        new AutoDrive(driveSubsystem, 0, -.5).withTimeout(.25));
+        shooter.stopCommand().withTimeout(.01));
   }
 }
