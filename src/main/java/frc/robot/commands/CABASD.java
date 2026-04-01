@@ -20,9 +20,9 @@ public class CABASD extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         shooter.autoCommand().withTimeout(.1),
-        new AutoDrive(driveSubsystem, -.5, 0).withTimeout(1.3),
-        new AutoDrive(driveSubsystem, .5, 0).withTimeout(.1),
-        new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.5),
+        new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.90),
+        new AutoDrive(driveSubsystem, .5, 0).withTimeout(.15),
+        new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.75),
         convey.ConveyorForword().withTimeout(5),
         shooter.stopCommand().withTimeout(0.01),
         convey.stop().withTimeout(0.01),

@@ -83,7 +83,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public Command nothingAutoShoot() {
-    return new InstantCommand(() -> setTargetRPM(-2775));
+    return new InstantCommand(() -> setTargetRPM(-3100));
   }
 
   // Idle speed

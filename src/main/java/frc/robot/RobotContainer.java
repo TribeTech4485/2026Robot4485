@@ -61,7 +61,7 @@ public class RobotContainer {
 
                 autoChooser.setDefaultOption(
                                 "don't Move And Shoot",
-                                new DoNothing(driveSubsystem, intake, shooter, convey));
+                                new DoNothing(driveSubsystem, intake, shooter, convey, intakeRotater));
                 /*
                  * autoChooser.addOption(
                  * "Left Climb Auto",
