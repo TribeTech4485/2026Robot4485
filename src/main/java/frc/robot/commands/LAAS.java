@@ -29,6 +29,9 @@ public class LAAS extends SequentialCommandGroup {
         new AutoDrive(driveSubsystem, -0.5, 0.0).withTimeout(.45),
         new AutoDrive(driveSubsystem, 0, .65).withTimeout(.18),
         new AutoDrive(driveSubsystem, .25, 0).withTimeout(.10),
+        new AutoDrive(driveSubsystem, 0, 0).withTimeout(0.25),//added
+        new AutoDrive(driveSubsystem, .5, 0).withTimeout(0.25),//added
+
         shooter.autoCommand().withTimeout(0.01),
         new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.5),
         convey.ConveyorForword().withTimeout(5),

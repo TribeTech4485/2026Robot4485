@@ -18,7 +18,7 @@ public class CABAS extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         shooter.autoCommand().withTimeout(.1),
-        new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.90),
+        new AutoDrive(driveSubsystem, -.5, 0).withTimeout(.45),//start.9
         new AutoDrive(driveSubsystem, .5, 0).withTimeout(.15),
         new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.75),
         convey.ConveyorForword().withTimeout(5),

@@ -26,10 +26,11 @@ public class RAASD extends SequentialCommandGroup {
         // the timing using the withTimeout decorator
         rotate.rotateIntakeDown().withTimeout(.01),
         shooter.idleCommand().withTimeout(.5),
-        new AutoDrive(driveSubsystem, -0.5, 0.0).withTimeout(.35),
+        new AutoDrive(driveSubsystem, -0.8, 0.0).withTimeout(.35),//start.5
         new AutoDrive(driveSubsystem, 0, -.65).withTimeout(.22),
         new AutoDrive(driveSubsystem, .25, 0).withTimeout(.10),
-        shooter.autoCommand().withTimeout(.01),
+        new AutoDrive(driveSubsystem, 0, 0).withTimeout(0.25),//added
+        new AutoDrive(driveSubsystem, .5, 0).withTimeout(0.4),//added .15 more that leftside
         new AutoDrive(driveSubsystem, 0, 0).withTimeout(1.5),
         convey.ConveyorForword().withTimeout(5),
         shooter.stopCommand().withTimeout(.01));
